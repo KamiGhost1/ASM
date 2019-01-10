@@ -1,0 +1,43 @@
+%include "io.inc"
+
+section .text
+global CMAIN
+CMAIN:
+mov ebp, esp; for correct debugging
+xor eax,eax
+xor ecx,ecx
+xor ebx,ebx
+lea esi,[a]
+mov edi,len
+call step
+ret
+step:
+cmp ecx,edi
+je q
+mov ebx,ecx
+step1:
+mov ah,[esi+ebx]
+step2:
+inc bx
+cmp ebx,edi
+je step3
+mov al,[esi+ebx]
+cmp ah,al
+jl step2
+mov edx,ebx
+mov ah,al
+jmp step2
+step3:
+mov al,[esi+ecx]
+cmp ah,al
+je step4
+xchg ah,[esi+ecx]
+xchg ah,[esi+edx]
+step4:
+inc cx
+jmp step
+q:
+ret
+section .data
+a db 8,5,7,3,6,0,1,2
+len equ $- a
