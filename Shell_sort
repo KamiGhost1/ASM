@@ -1,0 +1,69 @@
+%include "io.inc"
+
+section .text
+global CMAIN
+CMAIN:
+mov ebp, esp; for correct debugging
+xor ecx,ecx
+xor ebx,ebx
+xor edx,edx
+xor esi,esi
+mov edi, len
+shr edi,1
+dec edi
+call Shell_sort
+ret
+
+Shell_sort:
+mov bl,[minus+esi]
+cmp ebx,edi
+jg step_cicle
+sort_cicle:
+cmp ebx,edi
+jg step_sort_cicle
+mov ah,[mass+ecx*2]
+mov al,[mass+ebx*2]
+cmp ah,al
+jle step_sort_cicle
+call chg
+step_sort_cicle:
+inc ecx
+inc ebx
+cmp ecx,edi
+jge  step_cicle
+jmp sort_cicle
+step_cicle:
+xor ecx,ecx
+xor ebx,ebx
+inc esi
+cmp esi,len1
+je exit_Shell_sort
+jmp Shell_sort
+exit_Shell_sort:
+ret
+
+chg:
+push bx
+push cx
+mov dl,[minus+esi]
+changing:
+xchg ah,[mass+ebx*2]
+xchg ah,[mass+ecx*2]
+cmp cl,dl
+jl exit_chg
+mov bl,cl
+sub cl,dl
+mov al,[mass+ebx*2]
+mov ah,[mass+ecx*2]
+cmp ah,al
+jg changing
+exit_chg:
+pop cx
+pop bx
+ret
+
+section .data
+minus db 5,2,1
+len1 equ $-minus
+mass dw 3,0,5,6,4,1,8,9,2
+len equ $-mass
