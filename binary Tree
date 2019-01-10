@@ -80,13 +80,13 @@ exit_search:
 ret
 success_search:
 NEWLINE
-PRINT_STRING'hello Nigga '
+PRINT_STRING'hello Man, im find him! '
 PRINT_DEC 2,cx
 NEWLINE
 ret
 fail_search:
 NEWLINE
-PRINT_STRING'WTF BRO????'
+PRINT_STRING'WTF BRO???? he is existing?'
 NEWLINE
 ret
 
