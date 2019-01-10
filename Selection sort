@@ -38,6 +38,7 @@ inc cx
 jmp step
 q:
 ret
+
 section .data
 a db 8,5,7,3,6,0,1,2
 len equ $- a
